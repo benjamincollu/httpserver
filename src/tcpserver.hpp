@@ -11,7 +11,8 @@ namespace http {
             int listenTCP();
             int acceptTCP();
             int sendTCP(SOCKET client);
-            void closeTCP();
+            void closeTCP(SOCKET client);
+            void closeServer();
         private:
             SOCKET m_socket;
             WSADATA m_wsaData;

@@ -87,9 +87,11 @@ namespace http {
             return -1;
         }
 
-        if (this->sendTCP(client_socket)) {
+        if (this->sendTCP(client_socket) == 0) {
             std::cout << "Sent message to client.\n";
         }
+
+        this->closeTCP(client_socket);
         return 0;
     }
 
@@ -106,12 +108,22 @@ namespace http {
                  "\r\n", len);
         bytes_sentHEADER = send(client, response_header, strlen(response_header), 0);
         bytes_sentMSG = send(client, msg, len, 0);
-        return 1;
+
+        if (bytes_sentMSG == SOCKET_ERROR || bytes_sentHEADER == SOCKET_ERROR) {
+            std::cerr << "send failed: " << WSAGetLastError() << "\n";
+            return -1;
+        }
+        return 0;
     }
 
-    void TcpServer::closeTCP() {
+    void TcpServer::closeTCP(SOCKET client) {
+        closesocket(client);
+        std::cout << "TCP client socket closed.\n";
+    }
+
+    void TcpServer::closeServer() {
         closesocket(m_socket);
         WSACleanup();
-        std::cout << "TCP socket closed.\n";
+        std::cout << "TCP server closed.\n";
     }
 }
