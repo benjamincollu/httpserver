@@ -1,0 +1,8 @@
+{
+	"InstallScripts" : 
+	[
+		"C:/Users/Benja/Desktop/httpserver/build/cmake_install.cmake",
+		"C:/Users/Benja/Desktop/httpserver/build/src/cmake_install.cmake"
+	],
+	"Parallel" : false
+}
